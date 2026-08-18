@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Städbolag i Stockholm · Genomförbarhetsanalys</title>
+<meta name="description" content="Genomförbarhetsanalys för ett nystartat hemstädningsbolag i Stockholm: marknad, konkurrens, RUT-mekanik, unit economics, rekrytering och edge.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&family=Source+Serif+4:opsz,ital,wght@8..60,0,400;8..60,0,600;8..60,1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --grund:#F7FAF9;
+  --panel:#EEF4F0;
+  --black:#152820;
+  --dov:#44584E;
+  --gron:#1E6B4A;
+  --morkgron:#0F4630;
+  --linje:#D5E0D9;
+  --barnsten:#A9691C;
+  --tegel:#9B3B2E;
+  --display:"Bricolage Grotesque",system-ui,sans-serif;
+  --serif:"Source Serif 4",Georgia,serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
+body{
+  background:var(--grund);
+  color:var(--black);
+  font-family:var(--serif);
+  font-size:1.075rem;
+  line-height:1.65;
+}
+a{color:var(--gron);text-decoration-thickness:1px;text-underline-offset:3px}
+a:hover{color:var(--morkgron)}
+:focus-visible{outline:2px solid var(--gron);outline-offset:3px;border-radius:2px}
+
+.wrap{max-width:46rem;margin:0 auto;padding:0 1.25rem}
+.wrap-bred{max-width:60rem;margin:0 auto;padding:0 1.25rem}
+
+/* ---------- topplist ---------- */
+header.topp{
+  border-bottom:1px solid var(--linje);
+  background:var(--grund);
+}
+.topp-inner{
+  max-width:60rem;margin:0 auto;padding:.9rem 1.25rem;
+  display:flex;justify-content:space-between;align-items:baseline;gap:1rem;flex-wrap:wrap;
+}
+.topp .titel{font-family:var(--display);font-weight:600;font-size:1rem;color:var(--morkgron)}
+.topp nav{display:flex;gap:1.1rem;flex-wrap:wrap}
+.topp nav a{font-family:var(--display);font-size:.85rem;font-weight:500;text-decoration:none;color:var(--dov)}
+.topp nav a:hover{color:var(--gron)}
+
+/* ---------- hero ---------- */
+.hero{padding:4.5rem 0 3.5rem;animation:inton .8s ease both}
+@keyframes inton{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.hero .etikett{
+  font-family:var(--display);font-size:.9rem;font-weight:500;color:var(--dov);
+  margin-bottom:1.2rem;
+}
+.hero h1{
+  font-family:var(--display);font-weight:700;
+  font-size:clamp(2.5rem,7vw,4.4rem);
+  line-height:1.02;letter-spacing:-.02em;color:var(--morkgron);
+}
+.hero h1 .villkor{color:var(--barnsten)}
+.hero .ingress{
+  margin-top:1.5rem;font-size:1.2rem;line-height:1.6;color:var(--dov);max-width:38rem;
+}
+.hero .metadata{
+  margin-top:2rem;font-family:var(--display);font-size:.85rem;color:var(--dov);
+  display:flex;gap:1.5rem;flex-wrap:wrap;
+}
+.hero .metadata span{border-left:3px solid var(--linje);padding-left:.7rem}
+
+/* ---------- sektioner ---------- */
+section{padding:2.6rem 0}
+section + section{border-top:1px solid var(--linje)}
+h2{
+  font-family:var(--display);font-weight:650;font-size:1.65rem;letter-spacing:-.01em;
+  color:var(--morkgron);margin-bottom:1.1rem;
+}
+h3{
+  font-family:var(--display);font-weight:600;font-size:1.12rem;
+  color:var(--black);margin:1.8rem 0 .6rem;
+}
+p{margin-bottom:1rem}
+p:last-child{margin-bottom:0}
+strong{font-weight:600}
+ul,ol{padding-left:1.3rem;margin-bottom:1rem}
+li{margin-bottom:.45rem}
+li::marker{color:var(--gron)}
+
+/* de tre sanningarna */
+.sanningar{list-style:none;padding:0;counter-reset:sanning;margin-top:1.4rem}
+.sanningar li{
+  counter-increment:sanning;
+  border-left:3px solid var(--gron);
+  background:var(--panel);
+  padding:1rem 1.2rem;margin-bottom:.8rem;border-radius:0 6px 6px 0;
+}
+.sanningar li strong{display:block;font-family:var(--display);font-weight:600;margin-bottom:.2rem}
+
+/* ---------- tabeller ---------- */
+.tabellhus{overflow-x:auto;margin:1.2rem 0}
+table{border-collapse:collapse;width:100%;font-size:.95rem}
+caption{
+  caption-side:top;text-align:left;font-family:var(--display);font-weight:600;
+  font-size:.95rem;color:var(--dov);padding-bottom:.5rem;
+}
+th{
+  font-family:var(--display);font-weight:600;font-size:.85rem;color:var(--dov);
+  text-align:left;padding:.5rem .8rem;border-bottom:2px solid var(--morkgron);
+}
+td{
+  padding:.55rem .8rem;border-bottom:1px solid var(--linje);vertical-align:top;
+  font-variant-numeric:tabular-nums;
+}
+td.tal,th.tal{text-align:right}
+tr.markerad td{background:var(--panel);font-weight:600}
+.plus{color:var(--gron);font-weight:600}
+.minus{color:var(--tegel);font-weight:600}
+.villkorsfarg{color:var(--barnsten);font-weight:600}
+
+/* ---------- signatur: timpris-stapeln ---------- */
+.timme{
+  background:var(--morkgron);color:#EAF3EE;border-radius:10px;
+  padding:2rem 1.6rem;margin:1.6rem 0;
+}
+.timme h3{color:#fff;margin:0 0 .3rem;font-size:1.25rem}
+.timme .under{font-size:.95rem;color:#B9D2C5;margin-bottom:1.5rem}
+.stapel{display:flex;width:100%;height:3.4rem;border-radius:6px;overflow:hidden}
+.stapel div{position:relative;min-width:2px}
+.del-lon{background:#2E8B62;flex:256}
+.del-avg{background:#5FA983;flex:34}
+.del-fora{background:#8CC3A5;flex:13}
+.del-rest{background:#C2DCCD;flex:31}
+.del-marg{background:#F2C94C;flex:112}
+.legend{display:flex;flex-wrap:wrap;gap:1rem 1.6rem;margin-top:1.1rem;font-size:.88rem}
+.legend span{display:flex;align-items:center;gap:.45rem;font-family:var(--display)}
+.legend i{width:.85rem;height:.85rem;border-radius:3px;display:inline-block}
+.legend .tal{font-variant-numeric:tabular-nums;color:#B9D2C5;margin-left:.15rem}
+.timme .fotnot{margin-top:1.2rem;font-size:.85rem;color:#9FBFAE}
+
+/* ---------- verdiktband, villkor ---------- */
+.villkorslista{list-style:none;padding:0;counter-reset:v}
+.villkorslista li{
+  counter-increment:v;display:flex;gap:.9rem;align-items:baseline;
+  padding:.7rem 0;border-bottom:1px solid var(--linje);
+}
+.villkorslista li::before{
+  content:counter(v);
+  font-family:var(--display);font-weight:700;color:var(--barnsten);
+  font-size:1.1rem;min-width:1.4rem;
+}
+
+/* edge-tabellens ja/nej */
+td .ja{color:var(--gron);font-weight:700;font-family:var(--display)}
+td .nej{color:var(--tegel);font-weight:700;font-family:var(--display)}
+
+/* ---------- källor ---------- */
+details{
+  border:1px solid var(--linje);border-radius:8px;padding:1rem 1.2rem;margin-top:1rem;
+  background:var(--panel);
+}
+summary{
+  font-family:var(--display);font-weight:600;cursor:pointer;color:var(--morkgron);
+}
+details ol{margin-top:.9rem;font-size:.88rem}
+details li{margin-bottom:.3rem;overflow-wrap:anywhere}
+
+footer{
+  border-top:1px solid var(--linje);margin-top:2rem;padding:2rem 0 3rem;
+  font-family:var(--display);font-size:.85rem;color:var(--dov);
+}
+
+@media (max-width:640px){
+  .hero{padding:3rem 0 2.5rem}
+  body{font-size:1rem}
+  .legend{gap:.6rem 1rem}
+}
+</style>
+</head>
+<body>
+
+<header class="topp">
+  <div class="topp-inner">
+    <span class="titel">Städbolag i Stockholm</span>
+    <nav aria-label="Innehåll">
+      <a href="#marknad">Marknad</a>
+      <a href="#konkurrens">Konkurrens</a>
+      <a href="#ekonomi">Ekonomi</a>
+      <a href="#rekrytering">Rekrytering</a>
+      <a href="#edge">Edge</a>
+      <a href="#villkor">Villkor</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap">
+    <p class="etikett">Genomförbarhetsanalys · hemstädning med RUT · 2026-08-18</p>
+    <h1>Modellen bär.<br>Domen är <span class="villkor">villkorat GO</span></h1>
+    <p class="ingress">Hemstädning i Stockholm med kundens egna produkter och städare som reser kollektivt är en bevisat lönsam modell. Men miljön är inte er edge, marginalen per städare är tunn, och beläggningen avgör allt. Det här är siffrorna bakom domen.</p>
+    <div class="metadata">
+      <span>85 källor, hämtade 2026-08-18</span>
+      <span>Kalkyl körbar i repot</span>
+      <span>Marknad: 4,3 mdkr/år i länet</span>
+    </div>
+  </div>
+</div>
+
+<main>
+
+<section>
+  <div class="wrap">
+    <h2>Tre hårda sanningar</h2>
+    <p>Idén prövades mot sex research-spår: marknadsstatistik, konkurrenter, regelverk, kollektivavtal, försäkringar och rekrytering. Tre slutsatser styr allt annat.</p>
+    <ol class="sanningar">
+      <li><strong>Miljömodellen är ingen edge längre</strong>Bolaget ni inspirerats av heter Rozen Clean: grundat 2016, i dag cirka 69 anställda, 40,6 miljoner i omsättning och 13 procent i marginal på exakt er modell. De bevisar att idén bär, och blockerar samtidigt miljöpositionen. Grön städning ger dessutom ingen prispremie i Stockholm.</li>
+      <li><strong>Marginalen per städare är tunn</strong>I basfallet tjänar bolaget cirka 14 000 kr i månaden per fullbelagd städare med växa-stöd, men bara 7 000 kr när stödet tar slut efter 24 månader. En städare försörjer inga grundare. Det här är ett skalspel: städare ett bevisar modellen och finansierar städare två.</li>
+      <li><strong>Beläggningen avgör allt</strong>Skillnaden mellan 60 och 85 procents beläggning är värd 19 000 kr i månaden, mer än pris- och lönefrågorna tillsammans. Geografisk klustring av kunder är den enskilt viktigaste operativa faktorn.</li>
+    </ol>
+  </div>
+</section>
+
+<section id="marknad">
+  <div class="wrap">
+    <h2>Marknaden växer och Stockholm är tyngdpunkten</h2>
+    <p>RUT-avdraget omsatte 8,87 miljarder kr 2025, plus 8 procent mot året innan, och tillväxten fortsätter in i 2026. Hemstädning står för två tredjedelar. Stockholms län är 37 procent av hela riket, vilket ger en härledd hemstädningsmarknad på cirka <strong>4,3 miljarder kr i köpt arbetskostnad per år</strong>, troligen mer eftersom lägenhetstäta län köper mindre trädgårds-RUT.</p>
+    <div class="tabellhus">
+      <table>
+        <caption>Nyckeltal, Rutindikatorn 2025 och Skatteverket</caption>
+        <tr><th>Nyckeltal</th><th class="tal">Värde</th></tr>
+        <tr><td>Utbetalt RUT-avdrag i riket 2025</td><td class="tal">8,87 mdkr (+8,06 %)</td></tr>
+        <tr><td>Hemstädningens andel</td><td class="tal">66,35 %</td></tr>
+        <tr><td>RUT-avdrag Stockholms län 2025</td><td class="tal">3,25 mdkr</td></tr>
+        <tr><td>Snittavdrag per köpare i Stockholms kommun</td><td class="tal">~9 200 kr/år (37 % över rikssnittet)</td></tr>
+        <tr><td>Typisk abonnemangskund</td><td class="tal">3 h varannan vecka, 15 000 till 25 000 kr/år</td></tr>
+        <tr><td>RUT-tak 2026</td><td class="tal">50 % av arbetskostnaden, max 75 000 kr/person/år</td></tr>
+      </table>
+    </div>
+    <p>Kundprofilen pekar ut var ni ska sälja: toppdecilen i inkomst står för 40 procent av avdragsbeloppet, barnfamiljer 35 till 54 år driver 40 procent av volymen och 75-plus är största enskilda åldersgruppen. Kommuntoppen i länet: Stockholm, Nacka, Täby, Lidingö, Danderyd, Sollentuna.</p>
+    <p>Varningsflaggan: branschen är dubbelt konjunkturkänslig. 2023 minskade RUT-användningen för första gången någonsin innan den studsade tillbaka, och konkursnivån i städbranschen var hög 2023 till 2024.</p>
+  </div>
+</section>
+
+<section id="konkurrens">
+  <div class="wrap">
+    <h2>Konkurrensen och öppningen</h2>
+    <p><strong>Rozen Clean</strong> gör er modell i dag: kollektivtrafik, kundens material, abonnemang utan bindningstid, från 279 kr/h efter RUT. Grundat av ett par utan städbakgrund, DI Gasell två år i rad. Även lilla Kristallrent kör samma kombination. Modellen är alltså sällsynt men inte unik.</p>
+    <div class="tabellhus">
+      <table>
+        <caption>Stockholm, priser efter RUT, observerade 2026-08-18</caption>
+        <tr><th>Aktör</th><th class="tal">Pris efter RUT</th><th>Anmärkning</th></tr>
+        <tr><td>Hemfrid (inkl. Städarna, Vardagsfrid)</td><td class="tal">~310–337 kr/h</td><td>Marknadsledare, 1 855 anställda, bindningstid 3 mån</td></tr>
+        <tr><td>HomeMaid</td><td class="tal">~320 kr/h</td><td>Börsnoterat, 960 anställda</td></tr>
+        <tr><td>Freska</td><td class="tal">~299–349 kr/h</td><td>Krympande 18 %, nollmarginal, varnande exempel</td></tr>
+        <tr class="markerad"><td>Rozen Clean</td><td class="tal">fr. 279 kr/h</td><td>Er modell, 13 % marginal</td></tr>
+        <tr><td>BuddyCompany med flera plattformar</td><td class="tal">245–275 kr/h</td><td>Gig-modell, prispress i budgetsegmentet</td></tr>
+        <tr><td>Marknadsspannet</td><td class="tal">220–330 kr/h</td><td>Budget 190–240, premium 280–330+</td></tr>
+      </table>
+    </div>
+    <h3>Vad kunderna klagar på hos de stora</h3>
+    <p>Recensionsanalysen visar fem återkommande klagomål, samtliga strukturella följder av skala: olika städare varje gång trots löfte om motsatsen, ojämn kvalitet, fakturor som avviker från offerten, skador där bolaget nekar ansvar, och kundtjänst som inte återkopplar. Ett litet bolag kan vinna på precis dessa punkter.</p>
+  </div>
+</section>
+
+<section id="ekonomi">
+  <div class="wrap">
+    <h2>Ekonomin i en debiterad timme</h2>
+    <p>Basfallet: pris 279 kr/h efter RUT (Rozen-paritet), timlön 170 kr vilket är 16 procent över kollektivavtalets golv, beläggning 75 procent, en heltidsanställd städare. Bolagets intäkt per debiterad timme blir 446 kr exklusive moms. Så här fördelas den:</p>
+
+    <div class="timme">
+      <h3>Vart tar timpriset vägen</h3>
+      <p class="under">446 kr intäkt per debiterad timme, basfall med växa-stöd</p>
+      <div class="stapel" role="img" aria-label="Stapeldiagram: av 446 kr per debiterad timme går 256 kr till lön inklusive semesterersättning, 34 kr till arbetsgivaravgifter och sjukrisk, 13 kr till Fora-pension, 31 kr till SL-kort och overhead, och 112 kr blir kvar till bolaget.">
+        <div class="del-lon"></div><div class="del-avg"></div><div class="del-fora"></div><div class="del-rest"></div><div class="del-marg"></div>
+      </div>
+      <div class="legend">
+        <span><i style="background:#2E8B62"></i>Lön + semester<b class="tal">256 kr</b></span>
+        <span><i style="background:#5FA983"></i>Avgifter + sjukrisk<b class="tal">34 kr</b></span>
+        <span><i style="background:#8CC3A5"></i>Fora-pension<b class="tal">13 kr</b></span>
+        <span><i style="background:#C2DCCD"></i>SL + overhead<b class="tal">31 kr</b></span>
+        <span><i style="background:#F2C94C"></i>Kvar till bolaget<b class="tal">112 kr</b></span>
+      </div>
+      <p class="fotnot">Lönedelen inkluderar den obetalda restiden: vid 75 procents beläggning bär varje debiterad timme kostnaden för 1,33 betalda timmar. Med full arbetsgivaravgift, efter växa-stödets 24 månader, krymper bolagets del till cirka 57 kr. Den här öppenheten är också er föreslagna edge: visa kunden exakt vad städaren får.</p>
+    </div>
+
+    <div class="tabellhus">
+      <table>
+        <caption>Känslighet, EBIT per månad för en fullbelagd städare</caption>
+        <tr><th>Scenario</th><th class="tal">Marginal per deb. timme</th><th class="tal">Resultat per månad</th></tr>
+        <tr class="markerad"><td>Basfall med växa-stöd, år 1 till 2</td><td class="tal">143 kr</td><td class="tal plus">~14 100 kr</td></tr>
+        <tr><td>Basfall vid full arbetsgivaravgift</td><td class="tal">89 kr</td><td class="tal">~7 200 kr</td></tr>
+        <tr><td>Beläggning 60 %, spridda kunder</td><td class="tal">67 kr</td><td class="tal villkorsfarg">~2 900 kr</td></tr>
+        <tr><td>Beläggning 85 %, tätt kluster</td><td class="tal">179 kr</td><td class="tal plus">~21 600 kr</td></tr>
+        <tr><td>Lågpris 249 kr/h</td><td class="tal">95 kr</td><td class="tal">~8 100 kr</td></tr>
+        <tr><td>Värsta fallet: lågpris, hög lön, 60 %, full avgift</td><td class="tal minus">−88 kr</td><td class="tal minus">−12 900 kr</td></tr>
+      </table>
+    </div>
+    <p>Läsning: <strong>konkurrera aldrig på pris</strong>, och sälj i ett geografiskt kluster. SL-enkelbiljettens 75-minutersregel gör dessutom att resor mellan klustrade kunder ofta täcks av en enda biljett.</p>
+
+    <h3>Växa-stödet är hävstången</h3>
+    <p>10,21 procent arbetsgivaravgift i stället för 31,42 på lön upp till 35 000 kr/mån, för de två första anställda, i 24 månader vardera. Värt cirka 7 400 kr per månad och städare. Två fällor: från 2026 betalas full avgift löpande och mellanskillnaden återsöks, och delägare kvalificerar inte, så stödet gäller er externa städare.</p>
+
+    <h3>Start och kassa</h3>
+    <div class="tabellhus">
+      <table>
+        <tr><th>Post</th><th class="tal">Belopp</th></tr>
+        <tr><td>Aktiekapital, bundet men inte förbrukat</td><td class="tal">25 000 kr</td></tr>
+        <tr><td>Förbrukas vid start: Bolagsverket, försäkringar, hemsida, rekrytering, arbetskläder</td><td class="tal">~18 400 kr</td></tr>
+        <tr><td>Rörelsekapitalbuffert: två månaders kostnad plus RUT-fordran</td><td class="tal">~90 000 kr</td></tr>
+        <tr class="markerad"><td>Rekommenderad kassa vid start</td><td class="tal">~130 000 kr</td></tr>
+      </table>
+    </div>
+    <p>Tre saker binder kassa samtidigt: halva fakturavärdet ligger hos Skatteverket en till två veckor utan garanterad handläggningstid, växa-stödet betalas i efterskott, och lönen går ut före intäkten. Skriv dessutom in i era villkor att kunden blir betalningsskyldig om Skatteverket nekar RUT-utbetalningen, för avslagsrisken är er. Ramp-scenariot med start på 4 kunder och 3 nya per månad ger positivt månadsresultat från månad 2 till 3 och ackumulerat plus från månad 7.</p>
+  </div>
+</section>
+
+<section id="rekrytering">
+  <div class="wrap">
+    <h2>Rekryteringen vinner ni med trygghet, inte optioner</h2>
+    <p>Städare är ett av Arbetsförmedlingens 29 paradoxyrken: arbetsgivare skriker efter folk trots att arbetskraft finns. Problemet är matchning och retention. Varför städare lämnar: belastningsskador, ofrivillig deltid (41 procent mot 21 i övriga arbetslivet), otrygga visstidsanställningar och låg status. Erbjud motsatsen:</p>
+    <ul>
+      <li><strong>Timlön 170 kr</strong>, tydligt över avtalsgolvet på cirka 151 till 156 kr, och öppet redovisad</li>
+      <li><strong>Garanterad sysselsättningsgrad</strong> med väg mot fast månadslön, branschens största smärtpunkt</li>
+      <li><strong>Betald restid och SL-kort</strong>, skattegynnat från 1 juli 2026, matchar Hemfrids paket</li>
+      <li><strong>Fora-pension</strong> går att teckna utan kollektivavtal</li>
+      <li><strong>Klustrade kunder</strong> ger kort restid och rimligt tempo, samma åtgärd som höjer beläggningen</li>
+      <li><strong>Karriärväg till chefstädare</strong> med kvalitetsansvar och lönesteg när städare två och tre anställs</li>
+    </ul>
+    <p><strong>Om optionsidén:</strong> städverksamhet kvalificerar för kvalificerade personaloptioner, men lönekravet fäller det i praktiken. Den anställde måste tjäna minst 13 inkomstbasbelopp på tre år, cirka 30 100 kr i månaden, vilket ligger över städarsnittet på 27 600 kr, och deltid under 30 timmar i veckan diskvalificerar. Målgruppen värderar dessutom trygghet nu framför illikvid uppsida om tre år. Spara KPO till en framtida chefstädare, där lönekravet i sig blir rekryteringsargumentet.</p>
+    <p>Kanaler: Platsbanken är gratis och sprids automatiskt, Facebook-grupper är gratis, en liten Indeed-budget räcker. Blocket Jobb är nedlagt och rekryteringsbyrå kostar 50 000 kr eller mer. Kontrollera arbetstillstånd (lagplikt) och be om belastningsregisterutdrag, tillåtet och proportionerligt för arbete med nycklar i privathem, och gör det till säljargument.</p>
+  </div>
+</section>
+
+<section id="edge">
+  <div class="wrap">
+    <h2>Er edge: kontinuitet, transparens och trygghet</h2>
+    <p>Miljön behåller ni som grund, den sänker era kostnader och är trovärdig, men den differentierar er inte. Spetsen kommer från de storas fem klagomål:</p>
+    <div class="tabellhus">
+      <table>
+        <tr><th>Kandidat</th><th>Belägg</th><th class="tal">Dom</th></tr>
+        <tr><td>Samma städare, varje gång, garanterat</td><td>Största klagomålet hos alla stora, strukturellt sant hos er</td><td class="tal"><span class="ja">JA, huvud-edge</span></td></tr>
+        <tr><td>Prisgaranti: fakturan är alltid lika med bekräftelsen</td><td>Fakturaklagomål hos alla, även Rozen</td><td class="tal"><span class="ja">JA</span></td></tr>
+        <tr><td>Skadelöfte: fullt försäkrade, ersätter utan bråk</td><td>Nekade skadeståndsanspråk återkommer i recensionerna, nyckelförsäkring kostar cirka 300 kr/mån</td><td class="tal"><span class="ja">JA</span></td></tr>
+        <tr><td>Transparent lön: din städare får 170 kr av timpriset</td><td>Branschens fuskstämpel, ingen aktör gör detta, differentierar även mot Rozen</td><td class="tal"><span class="ja">JA</span></td></tr>
+        <tr><td>Geografisk nisch, kvartersstädaren</td><td>Beläggningskänsligheten i kalkylen</td><td class="tal"><span class="ja">JA, nödvändig</span></td></tr>
+        <tr><td>Teknisk enkelhet i bokning</td><td>Grundarnas kompetens, men kopierbart</td><td class="tal"><span class="ja">JA, förstärkare</span></td></tr>
+        <tr><td>Miljö som spets</td><td>Rozen äger positionen, ingen prispremie för grönt</td><td class="tal"><span class="nej">NEJ, grund</span></td></tr>
+        <tr><td>Lägre pris</td><td>Negativ marginal i värsta fallet</td><td class="tal"><span class="nej">NEJ, aldrig</span></td></tr>
+      </table>
+    </div>
+    <p><strong>Positioneringen i en mening:</strong> kvartersstädaren i ert kluster, samma städare varje gång, priset du bekräftat är priset du betalar, schysst lön öppet redovisad, och vi reser kollektivt och använder dina produkter. Det tar de storas fem svagheter samtidigt och är omöjligt att kopiera för en aktör med 1 800 anställda.</p>
+  </div>
+</section>
+
+<section id="villkor">
+  <div class="wrap">
+    <h2>Villkoren för GO</h2>
+    <ol class="villkorslista">
+      <li>Kluster-disciplin: välj två till tre angränsande stadsdelar med hög RUT-täthet och säg nej utanför</li>
+      <li>Pris minst 279 kr/h efter RUT, ingen priskonkurrens</li>
+      <li>Cirka 130 000 kr i startlikviditet, varav 90 000 kr rörelsebuffert</li>
+      <li>Rekryteringspaketet enligt ovan, inte optioner till städare ett</li>
+      <li>Edge lika med kontinuitet, transparens och trygghet, med miljö som grund</li>
+      <li>År ett bygger bevis, inte grundarlöner: uttag först när städare två och tre är fullbelagda</li>
+    </ol>
+    <h3>Första 90 dagarna</h3>
+    <ol>
+      <li>Begär försäkringsofferter, enda vägen till riktiga premier, och verifiera Fora-totalen med deras kalkylator</li>
+      <li>Registrera AB, F-skatt, moms och arbetsgivare, anmäl firmatecknare i Skatteverkets rot- och rut-tjänst, skriv villkor med avslagsklausulen</li>
+      <li>Bygg hemsidan med bokningsflöde, prisgaranti och transparent lön synligt</li>
+      <li>Annonsera på Platsbanken med hela paketet i annonsen</li>
+      <li>Sälj provstädningar i klustret, mål 4 till 6 abonnemangskunder innan städaren börjar och 10 vid månad tre</li>
+      <li>Verifiera det nya hemserviceavtalets 2026-nivåer innan lönen sätts</li>
+    </ol>
+    <details>
+      <summary>Underlag och källor</summary>
+      <p style="margin-top:.8rem">Analysen bygger på 85 källor hämtade 2026-08-18, bland andra Skatteverket (RUT-regler, arbetsgivaravgifter, växa-stöd, förmånsbeskattning), Rutindikatorn 2025 från Almega Hemserviceföretagen, Hemserviceavtalet i fulltext, Foras prislista för företag utan kollektivavtal, Arbetsförmedlingens yrkesprognoser, Riksrevisionens granskning av RUT-avdraget samt konkurrenternas egna prissidor och recensionsdata från Reco och Trustpilot. Fullständig källförteckning med URL per påstående finns i repot: <code>kallor.md</code> och <code>research/</code>. Kalkylen är körbar: <code>python kalkyl/unit_economics.py</code>.</p>
+      <p>Kända luckor: försäkringspremier för städbolag publiceras inte, offert krävs. Nya hemserviceavtalets nivåer 2025 till 2027 är inte öppet publicerade, kalkylen räknar upp 3 till 4 procent per år. Fora-delpremier utöver SAF-LO-pensionen är antagna till cirka 5 procent totalt.</p>
+    </details>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    Genomförbarhetsanalys 2026-08-18 · siffrorna gäller regler och priser per hämtningsdatum och bör verifieras på nytt vid start · byggd som beslutsunderlag för grundarteamet
+  </div>
+</footer>
+
+</body>
+</html>
